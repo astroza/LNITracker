@@ -102,7 +102,7 @@ waypoints = [
 puts "FakeGPS is running"
 i=0
 while true
-	Device.all[0].trackpoints.create(:elevation => 0, :longitude => waypoints[i%waypoints.size][0], :latitude => waypoints[i%waypoints.size][1], :time => DateTime.now.to_s)
+	Device.all[0].trackpoints.create(:elevation => 0, :longitude => waypoints[i%waypoints.size][1], :latitude => waypoints[i%waypoints.size][0], :time => DateTime.now.to_s)
 	sleep 1
 	i+=1
 end

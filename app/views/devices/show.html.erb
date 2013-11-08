@@ -1,3 +1,40 @@
+<script lang="javascript">
+var map;
+var marker;
+
+function update_position()
+{
+	$.getJSON("/devices/<%= @device.id %>/trackpoints.json?limit=1", function(data) {
+		pos = data[0];
+		var latlng = new google.maps.LatLng(pos.latitude, pos.longitude);
+		marker.setPosition(latlng);
+		map.setCenter(latlng);
+		setTimeout('update_position()', 1000);
+	});
+}
+
+function initialize() 
+{
+  var pos = new google.maps.LatLng(-35.001624, -71.230127);
+  var mapOptions = {
+    zoom: 16,
+    center: pos,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+
+  map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  marker = new google.maps.Marker({
+      position: pos,
+      map: map,
+      title: 'Posicion de vehiculo'
+  });
+}
+
+$(document).ready(function() {
+        initialize();
+	update_position();
+});
+</script>
 <p id="notice"><%= notice %></p>
 
 <p>
@@ -15,5 +52,10 @@
   <%= @device.vehicle_plate %>
 </p>
 
+<div style='width: 800px;'>
+  <div id="map" style='width: 800px; height: 400px;'></div>
+</div>
+
 <%= link_to 'Edit', edit_device_path(@device) %> |
 <%= link_to 'Back', devices_path %>
+
