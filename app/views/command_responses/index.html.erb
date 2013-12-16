@@ -1,0 +1,29 @@
+<h1>Listing command_responses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Response</th>
+      <th>Device</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @command_responses.each do |command_response| %>
+      <tr>
+        <td><%= command_response.response %></td>
+        <td><%= command_response.device_id %></td>
+        <td><%= link_to 'Show', command_response %></td>
+        <td><%= link_to 'Edit', edit_command_response_path(command_response) %></td>
+        <td><%= link_to 'Destroy', command_response, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Command response', new_command_response_path %>

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Command:</strong>
+  <%= @pending_command.command %>
+</p>
+
+<p>
+  <strong>Device:</strong>
+  <%= @pending_command.device_id %>
+</p>
+
+<%= link_to 'Edit', edit_pending_command_path(@pending_command) %> |
+<%= link_to 'Back', pending_commands_path %>

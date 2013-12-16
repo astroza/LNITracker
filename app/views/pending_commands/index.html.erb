@@ -1,0 +1,29 @@
+<h1>Listing pending_commands</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>Device</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pending_commands.each do |pending_command| %>
+      <tr>
+        <td><%= pending_command.command %></td>
+        <td><%= pending_command.device_id %></td>
+        <td><%= link_to 'Show', pending_command %></td>
+        <td><%= link_to 'Edit', edit_pending_command_path(pending_command) %></td>
+        <td><%= link_to 'Destroy', pending_command, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pending command', new_pending_command_path %>

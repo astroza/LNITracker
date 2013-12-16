@@ -1,4 +1,8 @@
 LNITracker::Application.routes.draw do
+  resources :command_responses
+
+  resources :pending_commands
+
   resources :devices do
       resources :trackpoints
   end

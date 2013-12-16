@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Response:</strong>
+  <%= @command_response.response %>
+</p>
+
+<p>
+  <strong>Device:</strong>
+  <%= @command_response.device_id %>
+</p>
+
+<%= link_to 'Edit', edit_command_response_path(@command_response) %> |
+<%= link_to 'Back', command_responses_path %>

@@ -11,12 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131107035145) do
+ActiveRecord::Schema.define(version: 20131216202621) do
+
+  create_table "command_responses", force: true do |t|
+    t.string   "response"
+    t.integer  "device_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "devices", force: true do |t|
     t.string   "name"
     t.string   "identifier"
     t.string   "vehicle_plate"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pending_commands", force: true do |t|
+    t.string   "command"
+    t.integer  "device_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
