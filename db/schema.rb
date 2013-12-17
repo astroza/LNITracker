@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131216202621) do
+ActiveRecord::Schema.define(version: 20131217184903) do
 
   create_table "command_responses", force: true do |t|
     t.string   "response"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20131216202621) do
     t.string   "vehicle_plate"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "connections",   default: 0
   end
 
   create_table "pending_commands", force: true do |t|
@@ -33,6 +34,7 @@ ActiveRecord::Schema.define(version: 20131216202621) do
     t.integer  "device_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "sent",       default: false
   end
 
   create_table "trackpoints", force: true do |t|
@@ -41,6 +43,7 @@ ActiveRecord::Schema.define(version: 20131216202621) do
     t.float    "longitude", null: false
     t.float    "elevation"
     t.datetime "time",      null: false
+    t.float    "velocity"
   end
 
 end
