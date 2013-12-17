@@ -64,7 +64,7 @@ class Server < EventMachine::Connection
 end
 
 EM.run do
-    EM.start_server 'localhost', 1140, Server do |conn|
+    EM.start_server '0.0.0.0', 1140, Server do |conn|
         conn.status = :NO_ID
 	conn.device = nil
 	conn.comm_inactivity_timeout = 60
