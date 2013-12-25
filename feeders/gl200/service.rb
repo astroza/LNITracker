@@ -36,7 +36,7 @@ class Server < EventMachine::Connection
 				elevation = Float(matches[5])
 				heading = matches[4]
 				accuracy = matches[2]
-				time = Time.new(Integer(matches[8]), Integer(matches[9]), Integer(matches[10]), Integer(matches[11]), Integer(matches[12]), Integer(matches[13]), "-04:00")
+				time = Time.new(matches[8].to_i, matches[9].to_i, matches[10].to_i, matches[11].to_i, matches[12].to_i, matches[13].to_i, "-04:00")
 				@device.trackpoints.create(:latitude => latitude, :longitude => longitude, :velocity => velocity, :elevation => elevation, :time => time)
 			end
 		else
