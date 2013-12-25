@@ -1,0 +1,67 @@
+require 'rubygems'
+require 'eventmachine'
+require 'date'
+
+ENV['RAILS_ENV'] = "development"
+require '../../config/environment.rb'
+
+class Server < EventMachine::Connection
+	attr_accessor :status, :device
+
+	def send_pending_commands
+		PendingCommand.where(:device_id => @device.id, :sent => false).each do |pc|
+			send_data(pc.command)
+			pc.sent = true
+			pc.save
+		end
+	end
+
+	def unbind
+		if @device != nil
+			@device.connections -= 1
+			@device.save
+		end
+	end
+
+	def receive_data(data)
+		if @status == :OK
+			send_pending_commands
+			matches = /^\+....:GT...,[0-9a-fA-F]{6},(\d{15}),.*,(\d*),(\d+.\d),(\d+),(-?\d+\.\d),(-?\d+\.\d+),(-?\d+\.\d+),(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})(\d{2}),.*\$/.match(data)
+			if matches != nil and matches.size >= 13
+				# Se trata de un reporte
+				imei = matches[1]
+				latitude = Float(matches[7])
+				longitude = Float(matches[6])
+				velocity = Float(matches[3])
+				elevation = Float(matches[5])
+				heading = matches[4]
+				accuracy = matches[2]
+				time = Time.new(Integer(matches[8]), Integer(matches[9]), Integer(matches[10]), Integer(matches[11]), Integer(matches[12]), Integer(matches[13]), "-04:00")
+				@device.trackpoints.create(:latitude => latitude, :longitude => longitude, :velocity => velocity, :elevation => elevation, :time => time)
+			end
+		else
+			matches = /^\+ACK:GTHBD,[0-9a-fA-F]{6},(\d{15}),.*,\d{14},.*\$/.match(data)
+			imei = matches[1] if matches != nil
+			if imei != nil
+				device = Device.where(:identifier => imei).first
+				if device != nil
+					@device = device
+					@status = :OK
+					send_pending_commands
+					@device.connections += 1
+					@device.save
+				end
+			else
+				close_connection
+			end
+		end
+	end
+end
+
+EM.run do
+    EM.start_server '0.0.0.0', 2224, Server do |conn|
+        conn.status = :NO_ID
+	conn.device = nil
+	conn.comm_inactivity_timeout = 60
+    end
+end
