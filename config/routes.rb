@@ -1,4 +1,6 @@
 LNITracker::Application.routes.draw do
+  resources :busstops
+
   resources :command_responses
 
   resources :pending_commands
