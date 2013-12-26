@@ -1,5 +1,5 @@
 LNITracker::Application.routes.draw do
-  resources :busstops
+  resources :bus_stops
 
   resources :command_responses
 
