@@ -2,7 +2,6 @@ require 'rubygems'
 require 'eventmachine'
 require 'date'
 
-ENV['RAILS_ENV'] = "development"
 require '../../config/environment.rb'
 
 # Report: /^>REV(\d{2})(\d{4})(\d)(\d{5})([\+|\-]\d{7})([\+|\-]\d{8})(\d{3})(\d{3})(\d)(\d)(\S*)<$/
@@ -32,9 +31,9 @@ class Server < EventMachine::Connection
 			if matches != nil and matches.size >= 12
 				# Se trata de un reporte
 				event_idx = matches[1]
-				weeks = matches[2]
-				day = matches[3]
-				time = matches[4]
+				weeks = matches[2].to_i
+				day = matches[3].to_i
+				time = matches[4].to_f
 				latitude = Float(matches[5])/100000.0
 				longitude = Float(matches[6])/100000.0
 				velocity = Float(matches[7])*1.609344
@@ -42,7 +41,11 @@ class Server < EventMachine::Connection
 				fix_mode = matches[9]
 				age = matches[10]
 				extended = matches[11]
-				@device.trackpoints.create(:latitude => latitude, :longitude => longitude, :velocity => velocity, :time => Time.now)
+				time = DateTime.new(1980, 1, 6, 0, 0, 0, "00:00")
+				time += 7*weeks
+				time += day
+				time += time/(24*3600)
+				@device.trackpoints.create(:latitude => latitude, :longitude => longitude, :velocity => velocity, :time => time)
 			end
 		else
 			matches = /^>RXART;(\S+);ID=(\d+)</.match(data)

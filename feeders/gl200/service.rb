@@ -2,7 +2,6 @@ require 'rubygems'
 require 'eventmachine'
 require 'date'
 
-ENV['RAILS_ENV'] = "development"
 require '../../config/environment.rb'
 
 class Server < EventMachine::Connection
@@ -65,3 +64,4 @@ EM.run do
 	conn.comm_inactivity_timeout = 60
     end
 end
+
