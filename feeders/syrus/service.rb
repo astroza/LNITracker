@@ -41,11 +41,11 @@ class Server < EventMachine::Connection
 				fix_mode = matches[9]
 				age = matches[10]
 				extended = matches[11]
-				time = DateTime.new(1980, 1, 6, 0, 0, 0, "00:00")
-				time += 7*weeks
-				time += day
-				time += time/(24*3600)
-				@device.trackpoints.create(:latitude => latitude, :longitude => longitude, :velocity => velocity, :time => time)
+				datetime = DateTime.new(1980, 1, 6, 0, 0, 0, "00:00")
+				datetime += 7*weeks
+				datetime += day
+				datetime += time/(24*3600)
+				@device.trackpoints.create(:latitude => latitude, :longitude => longitude, :velocity => velocity, :time => datetime)
 			end
 		else
 			matches = /^>RXART;(\S+);ID=(\d+)</.match(data)
