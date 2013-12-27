@@ -5,7 +5,7 @@
     <tr>
       <th>Name</th>
       <th>Identifier</th>
-      <th>Vehicle plate</th>
+      <th>Connections</th>
       <th></th>
       <th></th>
       <th></th>
@@ -17,7 +17,7 @@
       <tr>
         <td><%= device.name %></td>
         <td><%= device.identifier %></td>
-        <td><%= device.vehicle_plate %></td>
+	<td><%= device.connections %></td>
         <td><%= link_to 'Show', device %></td>
         <td><%= link_to 'Edit', edit_device_path(device) %></td>
         <td><%= link_to 'Destroy', device, method: :delete, data: { confirm: 'Are you sure?' } %></td>
