@@ -7,6 +7,7 @@ gem 'rails', '4.0.0'
 gem 'sqlite3'
 #gem 'pg'
 gem 'geokit-rails'
+gem 'daemons-rails'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
