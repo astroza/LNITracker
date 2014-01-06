@@ -5,6 +5,8 @@ LNITracker::Application.routes.draw do
 
   resources :pending_commands
 
+  resources :services
+
   resources :devices do
       resources :trackpoints
   end
@@ -20,7 +22,7 @@ LNITracker::Application.routes.draw do
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-  get 'prediction/:orig_ltd/:orig_lng/:dest_ltd/:dest_lng' => 'prediction#perform', as: :prediction_perform
+  get 'prediction/:device_id/:dest_ltd/:dest_lng' => 'prediction#perform', as: :prediction_perform
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
