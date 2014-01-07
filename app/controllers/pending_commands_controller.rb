@@ -1,6 +1,6 @@
 class PendingCommandsController < ApplicationController
   before_action :set_pending_command, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /pending_commands
   # GET /pending_commands.json
   def index
