@@ -1,6 +1,7 @@
 class TrackpointsController < ApplicationController
   before_action :set_trackpoint, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
+  
   # GET /trackpoints
   # GET /trackpoints.json
   def index
