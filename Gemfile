@@ -10,6 +10,9 @@ gem 'geokit-rails'
 gem 'daemons-rails'
 gem 'cancan'
 gem 'devise'
+gem 'twitter-bootswatch-rails', '~> 3.0.2'
+gem 'twitter-bootswatch-rails-helpers'
+gem 'therubyracer'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

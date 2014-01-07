@@ -1,31 +1,40 @@
-<h1>Listing bus_stops</h1>
-
-<table>
+<%- model_class = BusStop -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Latitude</th>
-      <th>Longitude</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:latitude) %></th>
+      <th><%= model_class.human_attribute_name(:longitude) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
-
   <tbody>
     <% @bus_stops.each do |bus_stop| %>
       <tr>
+        <td><%= link_to bus_stop.id, bus_stop_path(bus_stop) %></td>
         <td><%= bus_stop.name %></td>
         <td><%= bus_stop.latitude %></td>
         <td><%= bus_stop.longitude %></td>
-        <td><%= link_to 'Show', bus_stop %></td>
-        <td><%= link_to 'Edit', edit_bus_stop_path(bus_stop) %></td>
-        <td><%= link_to 'Destroy', bus_stop, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%=l bus_stop.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_bus_stop_path(bus_stop), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      bus_stop_path(bus_stop),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Bus stop', new_bus_stop_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_bus_stop_path,
+            :class => 'btn btn-primary' %>

@@ -1,25 +1,20 @@
-<%= form_for(@command_response) do |f| %>
-  <% if @command_response.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@command_response.errors.count, "error") %> prohibited this command_response from being saved:</h2>
-
-      <ul>
-      <% @command_response.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<%= form_for @command_response, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :response, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :response, :class => 'text_field' %>
     </div>
-  <% end %>
+  </div>
+  <div class="control-group">
+    <%= f.label :device_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :device_id, :class => 'number_field' %>
+    </div>
+  </div>
 
-  <div class="field">
-    <%= f.label :response %><br>
-    <%= f.text_field :response %>
-  </div>
-  <div class="field">
-    <%= f.label :device_id %><br>
-    <%= f.number_field :device_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                command_responses_path, :class => 'btn' %>
   </div>
 <% end %>

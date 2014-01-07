@@ -1,29 +1,38 @@
-<h1>Listing command_responses</h1>
-
-<table>
+<%- model_class = CommandResponse -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+</div>
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>Response</th>
-      <th>Device</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th><%= model_class.human_attribute_name(:id) %></th>
+      <th><%= model_class.human_attribute_name(:response) %></th>
+      <th><%= model_class.human_attribute_name(:device_id) %></th>
+      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
-
   <tbody>
     <% @command_responses.each do |command_response| %>
       <tr>
+        <td><%= link_to command_response.id, command_response_path(command_response) %></td>
         <td><%= command_response.response %></td>
         <td><%= command_response.device_id %></td>
-        <td><%= link_to 'Show', command_response %></td>
-        <td><%= link_to 'Edit', edit_command_response_path(command_response) %></td>
-        <td><%= link_to 'Destroy', command_response, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%=l command_response.created_at %></td>
+        <td>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_command_response_path(command_response), :class => 'btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      command_response_path(command_response),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-mini btn-danger' %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
-
-<%= link_to 'New Command response', new_command_response_path %>
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_command_response_path,
+            :class => 'btn btn-primary' %>

@@ -1,66 +1,27 @@
-<script lang="javascript">
-var map;
-var marker;
-
-function update_position()
-{
-	$.getJSON("/devices/<%= @device.id %>/trackpoints.json?limit=1", function(data) {
-		pos = data[0];
-		var latlng = new google.maps.LatLng(pos.latitude, pos.longitude);
-		marker.setPosition(latlng);
-		map.setCenter(latlng);
-		setTimeout('update_position()', 1000);
-	});
-}
-
-function initialize() 
-{
-  var pos = new google.maps.LatLng(-35.001624, -71.230127);
-  var mapOptions = {
-    zoom: 16,
-    center: pos,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-
-  map = new google.maps.Map(document.getElementById('map'), mapOptions);
-  marker = new google.maps.Marker({
-      position: pos,
-      map: map,
-      title: 'Posicion de vehiculo'
-  });
-}
-
-$(document).ready(function() {
-        initialize();
-	update_position();
-});
-</script>
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @device.name %>
-</p>
-
-<p>
-  <strong>Identifier:</strong>
-  <%= @device.identifier %>
-</p>
-
-<p>
-  <strong>Vehicle plate:</strong>
-  <%= @device.vehicle_plate %>
-</p>
-
-<p>
-  <strong>Connections:</strong>
-  <%= @device.connections %>
-</p>
-
-<div style='width: 800px;'>
-  <div id="map" style='width: 800px; height: 400px;'></div>
+<%- model_class = Device -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
 </div>
 
-<%= link_to 'Edit', edit_device_path(@device) %> |
-<%= link_to 'Back', devices_path %>
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
+  <dd><%= @device.name %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:identifier) %>:</strong></dt>
+  <dd><%= @device.identifier %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:vehicle_plate) %>:</strong></dt>
+  <dd><%= @device.vehicle_plate %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:connections) %>:</strong></dt>
+  <dd><%= @device.connections %></dd>
+</dl>
 
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              devices_path, :class => 'btn'  %>
+  <%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_device_path(@device), :class => 'btn' %>
+  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              device_path(@device),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>
+</div>

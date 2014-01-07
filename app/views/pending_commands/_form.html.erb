@@ -1,29 +1,26 @@
-<%= form_for(@pending_command) do |f| %>
-  <% if @pending_command.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@pending_command.errors.count, "error") %> prohibited this pending_command from being saved:</h2>
-
-      <ul>
-      <% @pending_command.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<%= form_for @pending_command, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :command, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :command, :class => 'text_field' %>
     </div>
-  <% end %>
+  </div>
+  <div class="control-group">
+    <%= f.label :device_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :device_id, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :sent, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.check_box :sent, :class => 'check_box' %>
+    </div>
+  </div>
 
-  <div class="field">
-    <%= f.label :command %><br>
-    <%= f.text_field :command %>
-  </div>
-  <div class="field">
-    <%= f.label :device_id %><br>
-    <%= f.number_field :device_id %>
-  </div>
-  <div class="field">
-    <%= f.label :sent %><br>
-    <%= f.check_box :sent %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                pending_commands_path, :class => 'btn' %>
   </div>
 <% end %>
