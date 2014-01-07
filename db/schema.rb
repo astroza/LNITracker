@@ -21,14 +21,6 @@ ActiveRecord::Schema.define(version: 20140107011707) do
     t.datetime "updated_at"
   end
 
-  create_table "busstops", force: true do |t|
-    t.string   "name"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "command_responses", force: true do |t|
     t.string   "response"
     t.integer  "device_id"
@@ -78,7 +70,7 @@ ActiveRecord::Schema.define(version: 20140107011707) do
     t.string   "account_type"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
