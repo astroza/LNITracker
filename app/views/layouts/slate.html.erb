@@ -19,8 +19,10 @@
   </head>
 
   <body style="padding-top: 70px;">
-
+  <%= render 'layouts/messages' %>
+  <div style="padding-left: 30px;">
   <%= yield %>
+  </div>
     <!-- Fixed navbar -->
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -41,6 +43,16 @@
 			<li><a href="https://wiki.iccutal.cl/wiki/UTalGPS_API">API</a></li>
 			<li><a href="/">About</a></li>
           </ul>
+          <ul class="nav navbar-nav pull-right">
+          <%if current_user %>
+          <li><a><b><%= current_user.email %></b></a></li>
+          <li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+          <%else%>
+          <li class="divider-vertical"></li>
+		  <li><a href="/users/sign_in">Sign in</a></li>
+          <%end%>
+          </li>
+        </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
