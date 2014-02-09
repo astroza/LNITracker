@@ -1,6 +1,6 @@
 class CommandResponsesController < ApplicationController
   before_action :set_command_response, only: [:show, :edit, :update, :destroy]
-
+  load_and_authorize_resource
   # GET /command_responses
   # GET /command_responses.json
   def index
