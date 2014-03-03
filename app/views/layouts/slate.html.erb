@@ -11,7 +11,9 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]-->
-
+    <%= javascript_include_tag "slate" %>
+    <%= yield(:page_javascript) if content_for?(:page_javascript) %>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false" type="text/javascript"></script>
     <%= stylesheet_link_tag "slate", :media => "all" %>
 
     <%= yield(:page_stylesheet) if content_for?(:page_stylesheet) %>
@@ -55,10 +57,6 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
-    <!-- Javascripts
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <%= javascript_include_tag "slate" %>
-    <%= yield(:page_javascript) if content_for?(:page_javascript) %>
+
   </body>
 </html>
