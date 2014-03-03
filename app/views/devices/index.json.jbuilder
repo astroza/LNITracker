@@ -1,4 +1,4 @@
 json.array!(@devices) do |device|
-  json.extract! device, :name, :identifier, :vehicle_plate
+  json.extract! device, :name
   json.url device_url(device, format: :json)
 end
