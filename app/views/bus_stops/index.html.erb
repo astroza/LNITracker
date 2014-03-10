@@ -1,7 +1,44 @@
 <%- model_class = BusStop -%>
+<script lang="javascript">
+var map;
+
+function initialize() 
+{
+  var pos = new google.maps.LatLng(-34.98601, -71.23865);
+  var mapOptions = {
+    zoom: 16,
+    center: pos,
+    mapTypeId: google.maps.MapTypeId.ROADMAP
+  };
+  map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  $.getJSON("/bus_stops.json", function(data) {		
+		for(i = 0; i < data.length; i++) {
+			pos = data[i]
+			var latlng = new google.maps.LatLng(pos.latitude, pos.longitude);
+			var marker = new google.maps.Marker({
+				position: latlng,
+				map: map,
+				title: pos.name
+			});
+		}
+	});
+	/*
+	var latlng = new google.maps.LatLng(pos.latitude, pos.longitude);
+  	marker = new google.maps.Marker({
+      	position: latlng,
+      	map: map,
+      	title: 'Posicion de vehiculo'
+  	}); */
+}
+
+$(document).ready(function() {
+    initialize();
+});
+</script>
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
 </div>
+<% if current_user and current_user.account_type == "admin" %>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -34,7 +71,12 @@
     <% end %>
   </tbody>
 </table>
-
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_bus_stop_path,
             :class => 'btn btn-primary' %>
+<% end %>
+
+&nbsp;
+<div style='width: 800px;'>
+  <div id="map" style='width: 1300px; height: 600px;'></div>
+</div>

@@ -1,27 +1,30 @@
 <h1>Services</h1>
 <h2>Feeders</h2>
-<table>
+<table class="table table-bordered">
   <thead>
     <tr>
       <th>Name</th>
-      <th>status</th>
-      <th></th>
+      <th>Status</th>
+      <th>Action</th>
     </tr>
   </thead>
 
   <tbody>
     <% @statuses.each do |status| %>
-      <tr>
+      <% if status[1] == :running %>
+      <tr class="success">
         <td><%= status[0] %></td>
-        <td><%= status[1] %></td>
-        <td><% if status[1] == :running %>
-			<%= link_to 'Stop', '/services/'+status[0], method: :delete, data: { confirm: 'Are you sure?' } %>
-			<% else %>
-			<%= link_to 'Start', '/services/'+status[0], method: :put %>
-			<% end %>
-		</td>
+        <td>Running</td>
+		<td><%= link_to 'Stop', '/services/'+status[0], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
-    <% end %>
+      <% else %>
+	  <tr class="danger">
+		<td><%= status[0] %></td>
+        <td>Stopped</td>
+		<td><%= link_to 'Start', '/services/'+status[0], method: :put %></td>
+	  </tr>
+	  <% end %>
+   <% end %>
   </tbody>
 </table>
 <br>

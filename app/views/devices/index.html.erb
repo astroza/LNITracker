@@ -18,7 +18,7 @@
   </thead>
   <tbody>
     <% @devices.each do |device| %>
-      <tr>
+      <tr class=<% if device.connections == 0 %>danger<% else %>active<% end %>>
         <td><%= link_to device.id, device_path(device) %></td>
         <td><%= device.name %></td>
 		<% if current_user and current_user.account_type == "admin" %>
@@ -26,7 +26,7 @@
         <td><%= device.vehicle_plate %></td>
 		<% end %>
         <td><%= device.connections %></td>
-        <td><%=l device.created_at %></td>
+        <td><%= device.created_at %></td>
         <td>
 	      <%= link_to t('.show', :default => t("helpers.links.show")),
                       device_path(device), :class => 'btn btn-mini' %>
@@ -44,7 +44,8 @@
     <% end %>
   </tbody>
 </table>
-
+<% if current_user and current_user.account_type == "admin" %>
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_device_path,
             :class => 'btn btn-primary' %>
+<% end %>
