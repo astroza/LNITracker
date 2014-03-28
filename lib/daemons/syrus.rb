@@ -56,8 +56,10 @@ class Server < EventMachine::Connection
 				datetime += time/(24*3600)
 				@device.trackpoints.create(:latitude => latitude, :longitude => longitude, :velocity => velocity, :time => datetime)
 			else
-				CommandResponse.create(:device_id => @device.id, :response => data)
+				CommandResponse.create(:device_id => @device.id, :response => data.force_encoding('Windows-1252').encode('UTF-8'))
 			end
+			# ACK
+			send_data(@device.identifier)
 		else
 			matches = /^>RXART;(\S+);ID=(\d+)</.match(data)
 			imei = matches[2] if matches != nil
@@ -69,6 +71,10 @@ class Server < EventMachine::Connection
 					send_pending_commands
 					@device.connections += 1
 					@device.save
+					# ACK
+					send_data(@device.identifier)
+				else
+					close_connection
 				end
 			else
 				close_connection
