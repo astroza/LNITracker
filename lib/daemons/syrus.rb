@@ -55,6 +55,8 @@ class Server < EventMachine::Connection
 				datetime += day
 				datetime += time/(24*3600)
 				@device.trackpoints.create(:latitude => latitude, :longitude => longitude, :velocity => velocity, :time => datetime)
+			else
+				CommandResponse.create(:device_id => @device.id, :response => data)
 			end
 		else
 			matches = /^>RXART;(\S+);ID=(\d+)</.match(data)
