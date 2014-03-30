@@ -3,40 +3,77 @@
 <script lang="javascript">
 var map;
 var marker;
+var cur_latlng = null;
+var follow_disabled = false;
+var geocoder;
 
 function update_position()
 {
 	$.getJSON("/devices/<%= @device.id %>/trackpoints.json?limit=1", function(data) {
 		pos = data[0];
-		var latlng = new google.maps.LatLng(pos.latitude, pos.longitude);
+                var latng;
+		latlng = new google.maps.LatLng(pos.latitude, pos.longitude);
+		if(!follow_disabled)
+			map.setCenter(latlng);
 		marker.setPosition(latlng);
-		map.setCenter(latlng);
+		cur_latlng = latlng;
+		geocoder.geocode({'latLng': cur_latlng}, geocode_response);
 		setTimeout('update_position()', 1000);
 	});
 }
 
+function geocode_response(results, status)
+{
+	if (status == google.maps.GeocoderStatus.OK && results[0])
+		document.getElementById('cur_address').innerHTML = "Location: " + results[0].formatted_address.split(",", 1);
+}
+
+function disable_follow()
+{
+	$("#follow_link").show();
+	follow_disabled = true;
+}
+
+function enable_follow()
+{
+	$("#follow_link").hide();
+	follow_disabled = false;
+	map.setCenter(cur_latlng);
+}
+
 function initialize() 
 {
-  var pos = new google.maps.LatLng(-35.001624, -71.230127);
-  var mapOptions = {
-    zoom: 16,
-    center: pos,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
+	var pos = new google.maps.LatLng(-35.001624, -71.230127);
+	var mapOptions = {
+		zoom: 16,
+		center: pos,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
+	};
 
-  map = new google.maps.Map(document.getElementById('map'), mapOptions);
-  marker = new google.maps.Marker({
-      position: pos,
-      map: map,
-      title: 'Posicion de vehiculo'
-  });
+	map = new google.maps.Map(document.getElementById('map'), mapOptions);
+	marker = new google.maps.Marker({
+		position: pos,
+		map: map,
+		title: '<%= @device.name %>',
+		icon: '/bus.png'
+	});
+	google.maps.event.addListener(map, 'dragend', function() {
+		disable_follow();
+	});
+	enable_follow();
+
+	geocoder = new google.maps.Geocoder();
 }
 
 $(document).ready(function() {
-    initialize();
+	initialize();
 	update_position();
 });
 </script>
+
+<div style="position: absolute; left: 0; top: 50px; width: 100%; height: 75%;">
+  <div id="map" style="width: 100%; height: 100%"></div>
+</div>
 
 <div class="page-header">
   <h1><%=t '.title', :default => model_class.model_name.human %></h1>
@@ -56,8 +93,6 @@ $(document).ready(function() {
 </dl>
 
 <div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              devices_path, :class => 'btn'  %>
   <% if current_user and current_user.account_type == "admin" %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_device_path(@device), :class => 'btn' %>
@@ -68,7 +103,14 @@ $(document).ready(function() {
               :class => 'btn btn-danger' %>
   <% end %>
 </div>
-&nbsp;
-<div style='width: 800px;'>
-  <div id="map" style='width: 800px; height: 400px;'></div>
+
+<div class="navbar navbar-inverse navbar-fixed-bottom">
+   <div class="navbar-right">
+       <ul class="nav navbar-nav">
+	<li id="follow_link"><a href="#" onclick="enable_follow(); return false;">Follow the vehicle</a></li>
+       </ul>
+   </div>
+   <div class="navbar-left">
+	<p id="cur_address" style="width: 200px; color: white;"></p>
+   </div>
 </div>
