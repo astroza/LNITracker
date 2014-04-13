@@ -5,7 +5,7 @@ class TesterController < ApplicationController
       velocity = params[:velocity]
       lng = params[:longitude]
       lat = params[:latitude]
-      Trackpoint.create(:device_id => device_id, :latitude => lat, :longitude => lng, :time => Time.now)
+      Trackpoint.create(:device_id => device_id, :latitude => lat, :longitude => lng, :velocity => velocity, :time => Time.now)
       respond_to do |format|
         format.html { render :text => "OK" }
       end

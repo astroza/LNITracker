@@ -6,6 +6,10 @@ class BusStopsController < ApplicationController
   # GET /bus_stops.json
   def index
     @bus_stops = BusStop.all
+    respond_to do |format|
+        format.json { render json: @bus_stops, callback: params[:callback] }
+        format.html
+    end
   end
 
   # GET /bus_stops/1
@@ -33,7 +37,7 @@ class BusStopsController < ApplicationController
         format.json { render action: 'show', status: :created, location: @bus_stop }
       else
         format.html { render action: 'new' }
-        format.json { render json: @bus_stop.errors, status: :unprocessable_entity }
+        format.json { render json: @bus_stop.errors, status: :unprocessable_entity, callback: params['callback'] }
       end
     end
   end

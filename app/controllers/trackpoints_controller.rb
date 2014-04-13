@@ -10,6 +10,10 @@ class TrackpointsController < ApplicationController
     else
         @trackpoints = Trackpoint.where(:device_id => params[:device_id]).order(time: :desc)
     end
+    respond_to do |format|
+        format.json { render json: @trackpoints, callback: params[:callback] }
+        format.html
+    end
   end
 
   # GET /trackpoints/1
