@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140107011707) do
+ActiveRecord::Schema.define(version: 20140414234326) do
 
   create_table "bus_stops", force: true do |t|
     t.string   "name"
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(version: 20140107011707) do
   create_table "command_responses", force: true do |t|
     t.string   "response"
     t.integer  "device_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "daily_counters", force: true do |t|
+    t.integer  "device_id"
+    t.date     "date"
+    t.integer  "counter"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

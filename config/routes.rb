@@ -1,4 +1,6 @@
 LNITracker::Application.routes.draw do
+  resources :daily_counters
+
   devise_for :users
   resources :bus_stops
 
