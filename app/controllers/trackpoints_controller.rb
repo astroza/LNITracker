@@ -15,7 +15,7 @@ class TrackpointsController < ApplicationController
     DailyCounter.get_counter(params[:device_id]).increment!(:counter)
 
     respond_to do |format|
-        format.json { render json: @trackpoints, callback: params[:callback] }
+        format.json # { render json: @trackpoints, callback: params[:callback] }
         format.html
     end
   end

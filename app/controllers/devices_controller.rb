@@ -8,7 +8,7 @@ class DevicesController < ApplicationController
   def index
     @devices = Device.all
     respond_to do |format|
-        format.json { render json: @devices, callback: params[:callback] }
+        format.json # { render json: @devices, callback: params[:callback] }
         format.html
     end
   end

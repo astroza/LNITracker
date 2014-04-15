@@ -7,7 +7,7 @@ class BusStopsController < ApplicationController
   def index
     @bus_stops = BusStop.all
     respond_to do |format|
-        format.json { render json: @bus_stops, callback: params[:callback] }
+        format.json # { render json: @bus_stops, callback: params[:callback] }
         format.html
     end
   end

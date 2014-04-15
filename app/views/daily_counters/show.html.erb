@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Device:</strong>
+  <%= @daily_counter.device_id %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @daily_counter.date %>
+</p>
+
+<p>
+  <strong>Counter:</strong>
+  <%= @daily_counter.counter %>
+</p>
+
+<%= link_to 'Edit', edit_daily_counter_path(@daily_counter) %> |
+<%= link_to 'Back', daily_counters_path %>

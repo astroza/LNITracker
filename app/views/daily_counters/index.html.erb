@@ -1,0 +1,31 @@
+<h1>Listing daily_counters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Device</th>
+      <th>Date</th>
+      <th>Counter</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @daily_counters.each do |daily_counter| %>
+      <tr>
+        <td><%= daily_counter.device_id %></td>
+        <td><%= daily_counter.date %></td>
+        <td><%= daily_counter.counter %></td>
+        <td><%= link_to 'Show', daily_counter %></td>
+        <td><%= link_to 'Edit', edit_daily_counter_path(daily_counter) %></td>
+        <td><%= link_to 'Destroy', daily_counter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Daily counter', new_daily_counter_path %>

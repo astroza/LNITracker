@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  device_id: 1
+  date: 2014-04-14
+  counter: 1
+
+two:
+  device_id: 1
+  date: 2014-04-14
+  counter: 1
