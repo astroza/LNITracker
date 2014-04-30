@@ -1,6 +1,8 @@
 class BusStopsController < ApplicationController
   before_action :set_bus_stop, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  before_filter :authenticate_user!, :except => [:show, :index]
+  load_and_authorize_resource :except => [:show, :index]
+  skip_load_resource :only => [:create]
 
   # GET /bus_stops
   # GET /bus_stops.json
