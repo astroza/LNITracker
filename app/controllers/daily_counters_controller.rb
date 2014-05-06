@@ -1,6 +1,8 @@
 class DailyCountersController < ApplicationController
   before_action :set_daily_counter, only: [:show, :edit, :update, :destroy]
-  load_and_authorize_resource
+  before_filter :authenticate_user!, :except => [:show, :index]
+  load_and_authorize_resource :except => [:show, :index]
+  skip_load_resource :only => [:create]
 
   # GET /daily_counters
   # GET /daily_counters.json

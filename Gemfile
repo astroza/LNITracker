@@ -6,6 +6,9 @@ gem 'rails', '4.0.0'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 gem 'pg'
+gem 'chartkick'
+gem "active_median"
+gem 'groupdate'
 gem 'jpbuilder'
 gem 'geokit-rails'
 gem 'daemons-rails'
