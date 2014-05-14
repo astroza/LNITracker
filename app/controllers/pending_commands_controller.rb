@@ -71,6 +71,6 @@ class PendingCommandsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pending_command_params
-      params.require(:pending_command).permit(:command, :device_id)
+      params.require(:pending_command).permit(:command, :device_id, :sent)
     end
 end
