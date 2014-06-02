@@ -1,1 +1,1 @@
-json.extract! @bus_stop, :name, :latitude, :longitude, :created_at, :updated_at
+json.extract! @bus_stop, :name, :homeward, :latitude, :longitude, :created_at, :updated_at

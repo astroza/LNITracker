@@ -7,7 +7,7 @@ class BusStopsController < ApplicationController
   # GET /bus_stops
   # GET /bus_stops.json
   def index
-    @bus_stops = BusStop.all
+    @bus_stops = BusStop.all.order(:id)
     respond_to do |format|
         format.json # { render json: @bus_stops, callback: params[:callback] }
         format.html
@@ -76,6 +76,6 @@ class BusStopsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bus_stop_params
-      params.require(:bus_stop).permit(:name, :latitude, :longitude)
+      params.require(:bus_stop).permit(:name, :homeward, :latitude, :longitude)
     end
 end

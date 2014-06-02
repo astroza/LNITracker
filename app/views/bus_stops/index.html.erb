@@ -44,6 +44,7 @@ $(document).ready(function() {
     <tr>
       <th><%= model_class.human_attribute_name(:id) %></th>
       <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:homeward) %></th>
       <th><%= model_class.human_attribute_name(:latitude) %></th>
       <th><%= model_class.human_attribute_name(:longitude) %></th>
       <th><%= model_class.human_attribute_name(:created_at) %></th>
@@ -55,6 +56,7 @@ $(document).ready(function() {
       <tr>
         <td><%= link_to bus_stop.id, bus_stop_path(bus_stop) %></td>
         <td><%= bus_stop.name %></td>
+        <td><%= bus_stop.homeward %></td>
         <td><%= bus_stop.latitude %></td>
         <td><%= bus_stop.longitude %></td>
         <td><%=l bus_stop.created_at %></td>
