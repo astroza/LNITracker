@@ -6,9 +6,9 @@ class TrackpointsController < ApplicationController
   # GET /trackpoints.json
   def index
     if params['limit'] != nil
-    	@trackpoints = Trackpoint.where(:device_id => params[:device_id]).limit(params[:limit]).order(time: :desc)
+    	@trackpoints = Trackpoint.where(:device_id => params[:device_id]).limit(params[:limit]).order(id: :desc)
     else
-        @trackpoints = Trackpoint.where(:device_id => params[:device_id]).limit(100).order(time: :desc)
+        @trackpoints = Trackpoint.where(:device_id => params[:device_id]).limit(100).order(id: :desc)
     end
 
     # Counter de solicitudes
